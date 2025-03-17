@@ -1,17 +1,33 @@
 <template>
   <div>
 
-    
     <h2>About</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque impedit unde consequuntur placeat aliquid eaque! Unde iste distinctio cupiditate, amet obcaecati quasi ducimus porro, laboriosam non id nostrum eaque iusto. </p>
+    
+    <form @submit.prevent="onSubmit">
+    <input type="text" v-model="code"  placeholder="Enter Currency code..." />
+    <button>Search</button>
+
+  </form>
     <div> {{ data }} </div>
       
 
   </div>
 </template> 
 <script setup>
+import { ref } from 'vue'
+
+const code = ref("GBP")
+var { data } = await useFetch(`/api/currency/${code.value}`);
+
+const newCode = 'EUR'
+async function onSubmit(newCode) {
+  console.log(code.value)
+  newCode = code.value
+var { data } = await $fetch(`/api/currency/${code.value}`);
+
+}
   // call server side script
-  const { data } = await useFetch('/api/currency/GBP')
+//  data  = await useFetch(`/api/currency/DOL`)
 
 </script>
 
@@ -25,3 +41,4 @@ p {
   margin: 20px 0;
 }
 </style>
+
